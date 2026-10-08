@@ -1,65 +1,176 @@
-AdventureWorks — Sales Analytics | SQL Server + Power BI
+# AdventureWorks Sales Analytics
 
-Projeto de análise de vendas desenvolvido com SQL Server e Power BI, utilizando a base de dados AdventureWorks para transformar dados transacionais em informações gerenciais por meio de consultas SQL, modelagem, medidas DAX e visualizações interativas.
+### SQL Server · Power BI · DAX · Business Intelligence
 
-O projeto foi desenvolvido com foco em análise de faturamento, comportamento das vendas, desempenho de produtos e evolução ao longo do tempo.
+> Transformando dados transacionais em informações para análise de desempenho comercial.
 
-📊 Dashboard
+Este projeto apresenta uma análise completa de vendas utilizando a base **AdventureWorks**, desde a exploração e preparação dos dados no **SQL Server** até a construção de um **dashboard interativo no Power BI**.
 
+O objetivo foi transformar uma grande quantidade de registros de vendas em indicadores que permitam entender **faturamento, pedidos, produtos, categorias e evolução das vendas ao longo do tempo**.
 
+---
 
+## Dashboard
 
-Dashboard desenvolvido no Power BI para análise do desempenho comercial.
+<p align="center">
+  <img src="imagens/dashboard.png" alt="AdventureWorks Sales Dashboard" width="100%">
+</p>
 
-🎯 Objetivo
+---
 
-O objetivo deste projeto foi construir uma solução de Business Intelligence capaz de responder perguntas como:
+## Visão geral
 
-Qual é o faturamento total?
-Como o faturamento evoluiu ao longo dos anos?
-Quais categorias geram mais receita?
-Quais produtos possuem maior faturamento?
-Quantos pedidos foram realizados?
-Qual é a quantidade de produtos vendidos?
-Qual é o ticket médio dos pedidos?
-Como o desempenho atual se compara ao período anterior?
+| Indicador             |                   Resultado |
+| --------------------- | --------------------------: |
+| Faturamento analisado |       **R$ 109,85 milhões** |
+| Pedidos               |                  **31.465** |
+| Linhas de vendas      |                 **121.317** |
+| Período analisado     | **30/05/2022 → 29/06/2025** |
 
-A proposta foi transformar dados relacionais em indicadores e análises que facilitam a tomada de decisão.
+> Os dados de 2025 são parciais e possuem registros somente até 29/06/2025.
 
-🛠️ Tecnologias utilizadas
-Tecnologia	Utilização
-SQL Server	Consulta, exploração e preparação dos dados
-SQL	JOINs, agregações, filtros e análises
-Power BI	Desenvolvimento do dashboard
-DAX	Criação dos indicadores e métricas
-GitHub	Versionamento e documentação do projeto
-🗄️ Base de dados
+---
 
-O projeto utiliza a base AdventureWorks, disponibilizada pela Microsoft, contendo dados relacionados a vendas, produtos, clientes, categorias e outras informações do processo comercial.
+# Sobre o projeto
 
-As principais tabelas utilizadas na análise foram:
+O projeto simula um cenário de **Business Intelligence para análise comercial**.
 
+A partir dos dados relacionais da AdventureWorks, foram construídas consultas SQL para explorar as informações e entender os relacionamentos entre pedidos, produtos, categorias e subcategorias.
+
+Depois dessa etapa, foi criada uma **VIEW consolidada** para servir como fonte de dados do Power BI.
+
+O processo foi estruturado da seguinte forma:
+
+```text
+                    ADVENTUREWORKS
+                          │
+                          ▼
+                    SQL SERVER
+                          │
+              ┌───────────┴───────────┐
+              │                       │
+         Exploração                JOINs
+              │                       │
+              └───────────┬───────────┘
+                          ▼
+                 vw_VendasPowerBI
+                          │
+                          ▼
+                       POWER BI
+                          │
+                 ┌────────┴────────┐
+                 │                 │
+                DAX          Visualizações
+                 │                 │
+                 └────────┬────────┘
+                          ▼
+                  SALES DASHBOARD
+```
+
+---
+
+# Perguntas de negócio
+
+O dashboard foi desenvolvido para responder perguntas como:
+
+**Desempenho**
+
+* Quanto foi faturado?
+* Quantos pedidos foram realizados?
+* Qual é o ticket médio?
+* Como as vendas evoluíram ao longo do tempo?
+
+**Produtos**
+
+* Quais produtos geram mais receita?
+* Quais produtos possuem maior volume de vendas?
+* Quais categorias concentram o faturamento?
+
+**Análise temporal**
+
+* Como o faturamento se comporta ao longo dos anos?
+* Qual foi o crescimento em relação ao período anterior?
+* Como interpretar o desempenho de 2025 considerando que o período está incompleto?
+
+---
+
+# Stack
+
+### Dados
+
+**SQL Server**
+
+Utilizado para:
+
+* exploração da base;
+* consultas analíticas;
+* relacionamentos entre tabelas;
+* agregações;
+* criação da VIEW utilizada pelo Power BI.
+
+### Business Intelligence
+
+**Power BI**
+
+Utilizado para:
+
+* conexão com o SQL Server;
+* tratamento e organização dos dados;
+* criação dos indicadores;
+* desenvolvimento do dashboard;
+* criação de filtros e visualizações interativas.
+
+### Linguagem
+
+**DAX**
+
+Utilizado para criação das principais métricas e análises de desempenho.
+
+### Versionamento
+
+**Git + GitHub**
+
+Utilizados para documentação e versionamento do projeto.
+
+---
+
+# Estrutura dos dados
+
+As principais tabelas utilizadas na construção da análise foram:
+
+```text
 Sales.SalesOrderHeader
         │
-        └── Sales.SalesOrderDetail
-                    │
-                    └── Production.Product
-                                │
-                                └── Production.ProductSubcategory
-                                            │
-                                            └── Production.ProductCategory
-Relacionamentos principais
-SalesOrderHeader → SalesOrderDetail
-SalesOrderDetail → Product
-Product → ProductSubcategory
-ProductSubcategory → ProductCategory
+        │ SalesOrderID
+        ▼
+Sales.SalesOrderDetail
+        │
+        │ ProductID
+        ▼
+Production.Product
+        │
+        │ ProductSubcategoryID
+        ▼
+Production.ProductSubcategory
+        │
+        │ ProductCategoryID
+        ▼
+Production.ProductCategory
+```
 
-Esses relacionamentos permitiram combinar informações de pedidos, produtos e categorias em uma única estrutura para análise.
+Essa estrutura permite relacionar:
 
-🔎 Preparação dos dados com SQL
+**Pedido → Item vendido → Produto → Subcategoria → Categoria**
 
-Foi criada uma VIEW específica para alimentar o Power BI:
+Dessa forma, é possível analisar o faturamento em diferentes níveis de detalhe.
 
+---
+
+# Preparação dos dados
+
+Para facilitar o consumo pelo Power BI, foi criada a VIEW:
+
+```sql
 CREATE VIEW vw_VendasPowerBI AS
 
 SELECT
@@ -89,36 +200,57 @@ INNER JOIN Production.ProductSubcategory ps
 
 INNER JOIN Production.ProductCategory pc
     ON ps.ProductCategoryID = pc.ProductCategoryID;
+```
 
-A VIEW consolida as principais informações necessárias para a análise e simplifica a conexão entre o SQL Server e o Power BI.
+A VIEW reúne as informações necessárias para realizar as análises sem precisar reconstruir os relacionamentos diretamente no Power BI.
 
-📐 Indicadores desenvolvidos
+---
 
-Foram criadas medidas DAX para transformar os dados em indicadores de negócio.
+# Indicadores
 
-Faturamento
+Foram desenvolvidas medidas DAX para transformar os dados em indicadores de negócio.
+
+### Faturamento
+
+```DAX
 Faturamento =
 SUM(vw_VendasPowerBI[Receita])
-Pedidos
+```
+
+### Pedidos
+
+```DAX
 Pedidos =
 DISTINCTCOUNT(vw_VendasPowerBI[Pedido])
-Produtos vendidos
+```
+
+### Produtos vendidos
+
+```DAX
 Produtos Vendidos =
 SUM(vw_VendasPowerBI[Quantidade])
-Preço médio
+```
+
+### Preço médio
+
+```DAX
 Preco Medio =
 AVERAGE(vw_VendasPowerBI[PrecoUnitario])
-Ticket médio
+```
+
+### Ticket médio
+
+```DAX
 Ticket Medio =
 DIVIDE(
     [Faturamento],
     [Pedidos]
 )
-Faturamento do período anterior
+```
 
-A análise temporal também utiliza uma medida para comparar o faturamento com o ano anterior.
+### Crescimento
 
-Crescimento percentual
+```DAX
 Crescimento % =
 VAR Atual = [Faturamento]
 VAR Anterior = [Faturamento Periodo Anterior]
@@ -132,70 +264,84 @@ RETURN
             Anterior
         )
     )
-📈 Análises realizadas
+```
 
-O dashboard permite analisar:
+---
 
-Evolução do faturamento
+# Análises do dashboard
 
-Acompanhamento do faturamento ao longo do período disponível na base.
+## Evolução do faturamento
 
-Faturamento por categoria
+Acompanhamento do faturamento ao longo do período disponível, permitindo identificar períodos de maior e menor desempenho.
 
-Comparação do desempenho entre:
+## Faturamento por categoria
 
-Bikes
-Components
-Clothing
-Accessories
-Produtos de maior faturamento
+A análise demonstra uma forte concentração da receita na categoria **Bikes**.
 
-Ranking dos principais produtos comercializados, permitindo identificar quais itens possuem maior participação na receita.
+| Categoria   |         Receita |
+| ----------- | --------------: |
+| Bikes       | **R$ 94,65 mi** |
+| Components  | **R$ 11,80 mi** |
+| Clothing    |  **R$ 2,12 mi** |
+| Accessories |  **R$ 1,27 mi** |
 
-Indicadores comerciais
+## Produtos
 
-O dashboard apresenta indicadores de:
+Foi desenvolvido um ranking dos produtos com maior faturamento, permitindo identificar os itens que possuem maior contribuição para a receita.
 
-Faturamento
-Pedidos
-Produtos vendidos
-Preço médio
-Ticket médio
-Crescimento percentual
-Filtros interativos
+Entre os destaques estão diferentes versões da linha **Mountain-200**, que aparecem entre os produtos de maior faturamento.
 
-O usuário pode explorar os dados utilizando filtros de:
+---
 
-Ano
-Categoria
-Subcategoria
-📊 Principais resultados encontrados
+# Principais insights
 
-A análise dos dados apresentou aproximadamente:
+A análise dos dados permite observar alguns pontos importantes:
 
-Indicador	Resultado
-Pedidos	31.465
-Linhas de venda	121.317
-Faturamento	R$ 109,85 milhões
-Período analisado	30/05/2022 – 29/06/2025
-Faturamento por categoria
-Categoria	Faturamento
-Bikes	R$ 94,65 mi
-Components	R$ 11,80 mi
-Clothing	R$ 2,12 mi
-Accessories	R$ 1,27 mi
+### 01 — Forte concentração em Bikes
 
-A categoria Bikes representa a maior parcela do faturamento analisado.
+A categoria Bikes representa a maior parte do faturamento analisado, apresentando uma participação significativamente superior às demais categorias.
 
-Entre os produtos de maior faturamento estão diferentes versões da linha Mountain-200, com destaque para o Mountain-200 Black, 38.
+### 02 — Mountain-200 se destaca
 
-⚠️ Observação sobre os dados
+Produtos da linha Mountain-200 aparecem entre os maiores geradores de receita, indicando forte desempenho dessa linha dentro da base analisada.
 
-Os dados disponíveis para 2025 são parciais, com registros até 29/06/2025.
+### 03 — Crescimento ao longo dos anos
 
-Por esse motivo, comparações entre 2025 e anos completos anteriores devem considerar essa diferença de período. Para análises de crescimento, a comparação com períodos equivalentes é mais adequada.
+O faturamento apresenta evolução significativa entre os primeiros anos disponíveis na base.
 
-📁 Estrutura do projeto
+### 04 — Cuidado com 2025
+
+O ano de 2025 não representa um ano completo. A base possui dados somente até **29/06/2025**, portanto comparações anuais precisam considerar o período equivalente.
+
+Esse cuidado evita interpretar incorretamente uma queda aparente causada simplesmente pela diferença na quantidade de meses disponíveis.
+
+---
+
+# O que foi desenvolvido
+
+```text
+[x] Exploração da base AdventureWorks
+[x] Identificação dos relacionamentos
+[x] Consultas SQL
+[x] JOIN entre tabelas
+[x] Agregações e análises
+[x] Criação da VIEW vw_VendasPowerBI
+[x] Conexão SQL Server → Power BI
+[x] Criação de medidas DAX
+[x] Indicadores de desempenho
+[x] Análise temporal
+[x] Ranking de produtos
+[x] Análise por categoria
+[x] Filtros interativos
+[x] Dashboard executivo
+[x] Documentação
+```
+
+---
+
+# Estrutura do repositório
+
+```text
 AdventureWorks-SQL-PowerBI/
 │
 ├── README.md
@@ -208,62 +354,87 @@ AdventureWorks-SQL-PowerBI/
 │
 └── imagens/
     └── dashboard.png
-🚀 Como reproduzir o projeto
-1. Banco de dados
+```
 
-Restaurar a base AdventureWorks no SQL Server.
+---
 
-2. SQL
+# Como executar
 
-Executar os scripts disponíveis na pasta:
+### 1. SQL Server
 
+Restaurar a base **AdventureWorks** em uma instância do SQL Server.
+
+### 2. Scripts SQL
+
+Executar os arquivos disponíveis na pasta:
+
+```text
 SQL/
+```
 
-A VIEW vw_VendasPowerBI será utilizada como fonte principal dos dados.
+### 3. Power BI
 
-3. Power BI
+Abrir:
 
-Abrir o arquivo:
-
+```text
 PowerBI/AdventureWorks-Sales.pbix
+```
 
-Configurar a conexão com o SQL Server local e atualizar os dados.
+Configurar a conexão com o SQL Server utilizado e atualizar os dados.
 
-📚 Conhecimentos aplicados
+---
 
-Durante o desenvolvimento foram aplicados conceitos de:
+# Aprendizados
 
-SQL
-SELECT e WHERE
-INNER JOIN
-Relacionamentos entre tabelas
-Aliases
-GROUP BY
-ORDER BY
-Funções de agregação
-Análise temporal
-Views
-Power BI
-DAX
-Indicadores de desempenho
-Análise exploratória de dados
-Visualização de dados
-Business Intelligence
-💡 Próximos passos
+Este projeto foi desenvolvido também como uma aplicação prática de conceitos de **SQL, Business Intelligence e análise de dados**.
 
-Possíveis evoluções para o projeto:
+Durante o desenvolvimento foram trabalhados:
 
-Criar uma página específica para análise de produtos
-Adicionar análise de clientes
-Criar indicadores de participação percentual
-Expandir as análises temporais
-Adicionar novos indicadores comerciais
-Melhorar a análise de períodos equivalentes
-Criar uma camada de documentação mais detalhada das consultas SQL
-👨‍💻 Autor
+* SQL Server;
+* SELECT e filtros;
+* INNER JOIN;
+* relacionamentos entre tabelas;
+* aliases;
+* GROUP BY;
+* ORDER BY;
+* funções de agregação;
+* criação de VIEW;
+* análise temporal;
+* Power BI;
+* DAX;
+* indicadores de desempenho;
+* visualização de dados;
+* interpretação de métricas;
+* construção de dashboard;
+* documentação de projeto.
 
-Igor Gabriel da Silva
+---
 
-Estudante de Análise e Desenvolvimento de Sistemas, com interesse em Desenvolvimento, SQL, Dados, Power BI e Tecnologia da Informação.
+# Próximos passos
 
-GitHub
+Algumas melhorias planejadas para futuras versões:
+
+* análise detalhada de clientes;
+* análise de participação percentual;
+* indicadores adicionais de desempenho;
+* análise de margem;
+* comparação de períodos equivalentes;
+* expansão do dashboard para novas áreas de negócio.
+
+---
+
+# Autor
+
+## Igor Gabriel da Silva
+
+Estudante de **Análise e Desenvolvimento de Sistemas**, com foco em desenvolvimento, SQL, dados, Power BI e tecnologia.
+
+<p align="left">
+  <a href="https://github.com/igor488">
+    <img src="https://img.shields.io/badge/GitHub-igor488-181717?style=for-the-badge&logo=github" alt="GitHub">
+  </a>
+</p>
+
+---
+
+### Projeto desenvolvido para fins de estudo, portfólio e aplicação prática de conceitos de SQL, Business Intelligence e análise de dados.
