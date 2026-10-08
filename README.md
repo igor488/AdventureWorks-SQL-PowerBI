@@ -15,20 +15,6 @@ O objetivo foi transformar uma grande quantidade de registros de vendas em indic
 <p align="center">
   <img src="imagens/dashboard.png" alt="AdventureWorks Sales Dashboard" width="100%">
 </p>
-
----
-
-## Visão geral
-
-| Indicador             |                   Resultado |
-| --------------------- | --------------------------: |
-| Faturamento analisado |       **R$ 109,85 milhões** |
-| Pedidos               |                  **31.465** |
-| Linhas de vendas      |                 **121.317** |
-| Período analisado     | **30/05/2022 → 29/06/2025** |
-
-> Os dados de 2025 são parciais e possuem registros somente até 29/06/2025.
-
 ---
 
 # Sobre o projeto
